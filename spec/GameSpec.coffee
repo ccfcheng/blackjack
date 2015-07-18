@@ -1,4 +1,6 @@
 assert = chai.assert
+expect = chai.expect
+spy = chai.spy
 
 describe 'Game Model', ->
   game = null
@@ -24,3 +26,18 @@ describe 'Game Model', ->
       assert.strictEqual game.has('playerHand'), true
     it 'has a dealer hand property', ->
       assert.strictEqual game.has('dealerHand'), true
+
+  describe 'on stand events', ->
+    describe 'for the player', ->
+      beforeEach ->
+        playerHand.stand()
+
+      it 'Game receives the best score for player', ->
+        expect(game.get('playerBestScore')).to.equal(playerHand.bestScore())
+
+    describe 'for the dealer', ->
+      beforeEach ->
+        dealerHand.stand()
+
+      it 'Game receives the best score for dealer', ->
+        expect(game.get('dealerBestScore')).to.equal(dealerHand.bestScore())
